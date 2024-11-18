@@ -1,0 +1,28 @@
+{
+  "name": "cicd-tf-docker-scan",
+  "version": "1.0.0",
+  "description": "cicd for ecs",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tcwong2024/CE7-M3-CICD-TF-Docker-Scan.git"
+  },
+  "author": "wtc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tcwong2024/CE7-M3-CICD-TF-Docker-Scan/issues"
+  },
+  "homepage": "https://github.com/tcwong2024/CE7-M3-CICD-TF-Docker-Scan#readme",
+  "dependencies": {
+    "express": "^4.20.0"
+  },
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "jest": "^29.7.0",
+    "mocha": "^10.4.0",
+    "supertest": "^7.0.0"
+  }
+}
