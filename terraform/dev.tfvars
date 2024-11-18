@@ -1,0 +1,5 @@
+ecs_cluster_name     = "wtc-ecs-cluster-dev"
+ecs_service_name     = "wtc-ecs-service-dev"
+ecs_task_defn_family = "wtc-ecs-task-def-dev"
+ecs_container_name   = "wtc-container-dev"
+ecs_port_name        = "wtc-3000-tcp-dev"

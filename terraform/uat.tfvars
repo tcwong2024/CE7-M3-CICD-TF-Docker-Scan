@@ -1,0 +1,5 @@
+ecs_cluster_name     = "wtc-ecs-cluster-uat"
+ecs_service_name     = "wtc-ecs-service-uat"
+ecs_task_defn_family = "wtc-ecs-task-def-uat"
+ecs_container_name   = "wtc-container-uat"
+ecs_port_name        = "wtc-3000-tcp-uat"
