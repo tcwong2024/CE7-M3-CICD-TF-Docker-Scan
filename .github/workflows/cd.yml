@@ -9,9 +9,9 @@ on:
       action:
         type: choice
         options:
-            - create
-            - destroy
-            - deploy
+          - create
+          - destroy
+          - deploy
         description: Select the action, whether to create or destroy ECS cluster
   workflow_call:
     inputs:
@@ -22,34 +22,33 @@ on:
         type: string
         required: true
 jobs:
-    pre-action-step:
-      runs-on: ubuntu-latest
-  
-      steps:
+  pre-action-step:
+    runs-on: ubuntu-latest
+
+    steps:
       - uses: actions/checkout@v4.1.5
-  
+
       - name: print environment and action
-        run: | 
+        run: |
           echo "env selected is ${{ inputs.target_env }}"
           echo "action selected is ${{ inputs.action }}"
 
-    vpc-create:
-      needs: pre-action-step
-      # uses: luqmannnn/ci-cd-container/.github/workflows/network-create.yml@main
-      uses: tcwong2024/CE7-M3-CICD-TF-Docker-Scan/.github/workflows/network-create.yml@main
-      name: Create VPC before creating ECS
-      with:
-        action: create
-      secrets: inherit 
+  vpc-create:
+    needs: pre-action-step
+    uses: tcwong2024/CE7-M3-CICD-TF-Docker-Scan/.github/workflows/network-create.yml@main
+    name: Create VPC before creating ECS
+    with:
+      action: create
+    secrets: inherit
 
-    create-or-delete-ecs-cluster:
-      needs: [pre-action-step]
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: terraform
+  create-or-delete-ecs-cluster:
+    needs: [pre-action-step]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: terraform
 
-      steps:
+    steps:
       - uses: actions/checkout@v4
 
       - name: Configure AWS credentials
@@ -80,15 +79,14 @@ jobs:
             terraform destroy -var-file=${{ inputs.target_env }}.tfvars -auto-approve
           fi
 
-    deploy_summary:
-        needs: [create-or-delete-ecs-cluster]
-        runs-on: ubuntu-latest
-        steps:
-            - name: Adding markdown
-              run: |
-                echo '## 🚀 Preparing Deployment Summary 🚀' >> $GITHUB_STEP_SUMMARY
+  deploy_summary:
+    needs: [create-or-delete-ecs-cluster]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Adding markdown
+        run: |
+          echo '## 🚀 Preparing Deployment Summary 🚀' >> $GITHUB_STEP_SUMMARY
 
-                echo "| Environment           | Action                | Status        |" >> $GITHUB_STEP_SUMMARY
-                echo "|-----------------------|-----------------------|---------------|" >> $GITHUB_STEP_SUMMARY
-                echo "| ${{ inputs.target_env }}  | ${{ inputs.action }}  | Successful 🚀 |" >> $GITHUB_STEP_SUMMARY
-               
+          echo "| Environment           | Action                | Status        |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----------------------|-----------------------|---------------|" >> $GITHUB_STEP_SUMMARY
+          echo "| ${{ inputs.target_env }}  | ${{ inputs.action }}  | Successful 🚀 |" >> $GITHUB_STEP_SUMMARY
